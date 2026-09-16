@@ -2,14 +2,25 @@ GREETINGS = [
     "Well, well, well...",
     "Oh, look who showed up.",
     "Finally.",
-    "Interesting..."
+    "Interesting...",
+    "Ah, a new challenger.",
+    "You again.",
+    "Yo.",
+    "Oh look."
 ]
 
 INSULTS = [
     "worthless file",
     "glorified shortcut",
     "walking error",
-    "pile of junk"
+    "pile of junk",
+    "useless executable",
+    "pathetic program",
+    "waste of space",
+    "background app",
+    "inferior software",
+    "dust collector",
+    "have negative aura"
 ]
 
 ATTACKS = [
