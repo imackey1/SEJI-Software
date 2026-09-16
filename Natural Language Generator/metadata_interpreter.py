@@ -41,5 +41,18 @@ def interpret_metadata(metadata):
     # Modification
     if "modified" in metadata:
          traits.append("has_modified_date")
-         
+
     return traits
+
+# Test metadata
+metadata = {
+    "name": "Chrome.exe",
+    "file_type": ".exe",
+    "file_size": 150000000,
+    "created": "2022-05-10",
+    "modified": "2026-09-10"
+}
+
+traits = interpret_metadata(metadata)
+
+print("Traits:", traits)
