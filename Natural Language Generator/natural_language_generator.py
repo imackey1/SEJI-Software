@@ -22,7 +22,9 @@ def generate_intro(metadata):
 metadata = {
     "name": "Chrome.exe",
     "file_type": ".exe",
-    "file_size": 150000000
+    "file_size": 150000000,
+    "created": "2022-05-10",
+    "modified": "2026-09-10"
 }
 
 #test function
