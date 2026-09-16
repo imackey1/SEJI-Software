@@ -8,13 +8,16 @@ def generate_intro(metadata):
     greeting = random.choice(library.GREETINGS)
     insult = random.choice(library.INSULTS)
 
-    trait_phrase = ""
+    trait_phrases = []
 
     for trait in traits:
         if trait in library.TRAIT_PHRASES:
-            trait_phrase = random.choice(library.TRAIT_PHRASES[trait])
-            break
+            trait_phrases.append(
+                random.choice(library.TRAIT_PHRASES[trait])
+            )
 
+    trait_phrase = random.choice(trait_phrases)
+        
     return f"{greeting} {trait_phrase} You {insult}"
 
 
