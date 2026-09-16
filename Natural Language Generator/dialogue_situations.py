@@ -1,0 +1,7 @@
+INTRO = "intro"
+ATTACK = "attack"
+DAMAGE = "damage"
+LOW_HEALTH = "low_health"
+DODGE = "dodge"
+VICTORY = "victory"
+DEFEAT = "defeat"
