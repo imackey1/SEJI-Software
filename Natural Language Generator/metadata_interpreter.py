@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def interpret_metadata(metadata):
     traits = []
 
@@ -36,11 +38,31 @@ def interpret_metadata(metadata):
     # Age
     # Placeholder 
     if "created" in metadata:
-         traits.append("has_creation_date")
+        created_date = datetime.strptime(metadata["created"], "%Y-%m-%d")
+        current_date = datetime.now()
+
+        age_days = (current_date - created_date).days
+
+        if age_days < 30:
+            traits.append("new")
+        elif age_days < 365:
+            traits.append("fairly_old")
+        else:
+            traits.append("old")
 
     # Modification
     if "modified" in metadata:
-         traits.append("has_modified_date")
+        modified_date = datetime.strptime(metadata["modified"], "%Y-%m-%d")
+        current_date = datetime.now()
+
+        modified_days = (current_date - modified_date).days
+
+        if modified_days < 30:
+            traits.append("recently_modified")
+        elif modified_days < 365:
+            traits.append("modified_this_year")
+        else:
+            traits.append("stale")
 
     return traits
 
