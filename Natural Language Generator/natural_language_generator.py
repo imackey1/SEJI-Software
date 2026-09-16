@@ -20,6 +20,23 @@ def generate_intro(metadata):
         
     return f"{greeting} {trait_phrase} You {insult}"
 
+def generate_enemy_dialogue(metadata):
+    traits = interpreter.interpret_metadata(metadata)
+
+    dialogue_options = []
+
+    for trait in traits:
+        if trait in library.ENEMY_PHRASES:
+            dialogue_options.extend(library.ENEMY_PHRASES[trait])
+
+    if dialogue_options:
+        phrase = random.choice(dialogue_options)
+    else:
+        phrase = "Prepare yourself."
+
+    ending = random.choice(library.ENEMY_ENDINGS)
+
+    return f"{phrase} {ending}" 
 
 #test metadata
 metadata = {
@@ -32,3 +49,4 @@ metadata = {
 
 #test function
 print(generate_intro(metadata))
+print(generate_enemy_dialogue(metadata))

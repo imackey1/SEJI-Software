@@ -38,15 +38,15 @@ TRAIT_PHRASES = {
     ],
 
     "medium": [
-    "I'm right in the middle.",
-    "I'm no small file.",
-    "I'm not exactly lightweight."
+        "I'm right in the middle.",
+        "I'm no small file.",
+        "I'm not exactly lightweight."
     ],
 
     "large": [
-        "That's a lot of data.",
-        "You're carrying quite a load.",
-        "Big file, big target.",
+        "I've got more data than I know what to do with.",
+        "There's a reason they gave me all this space.",
+        "You don't get this big by accident."
     ],
 
     "old": [
@@ -86,9 +86,9 @@ TRAIT_PHRASES = {
     ],
 
     "application": [
-        "Another application in my way.",
-        "Let's see what you're capable of.",
-        "An application? How interesting.",
+        "I'm a program built to get things done.",
+        "I know my way around this system.",
+        "I was made to run."
     ],
 
     "document": [
@@ -120,5 +120,109 @@ TRAIT_PHRASES = {
         "Let's execute this.",
         "I've already planned my next move."
     ]
-
 }
+
+ENEMY_PHRASES = {
+    "small": [
+        "Don't underestimate me.",
+        "Small doesn't mean harmless.",
+        "You won't have an easy time with me."
+    ],
+
+    "medium": [
+        "Let's see what you've got.",
+        "You picked the wrong fight.",
+        "I'm ready for you."
+    ],
+
+    "large": [
+        "You really think you can take me?",
+        "You're standing against something much bigger than you.",
+        "You should have stayed away."
+    ],
+
+    "new": [
+        "Let's see what I'm capable of.",
+        "I'm new, but I'm ready.",
+        "Everyone has a first fight."
+    ],
+
+    "fairly_old": [
+        "I've been around for a while.",
+        "I've survived this long for a reason.",
+        "I've seen plenty of files like you."
+    ],
+
+    "old": [
+        "I've been here longer than you.",
+        "I've survived longer than most.",
+        "Experience is on my side."
+    ],
+
+    "recently_modified": [
+        "I'm freshly updated.",
+        "I've just been changed.",
+        "You caught me at my strongest."
+    ],
+
+    "modified_this_year": [
+        "I've had some changes recently.",
+        "I'm not the same file I used to be.",
+        "I've been improved."
+    ],
+
+    "stale": [
+        "I've been waiting here for a long time.",
+        "Nobody has touched me in ages.",
+        "Finally, something interesting."
+    ],
+
+    "application": [
+        "I'm ready to execute.",
+        "I'm built to run.",
+        "System process initiated."
+    ],
+
+    "document": [
+        "I've got plenty to say.",
+        "You'll be reading about this later.",
+        "Consider this another chapter."
+    ],
+
+    "image": [
+        "Remember this picture.",
+        "You won't forget what you see.",
+        "Say cheese."
+    ],
+
+    "video": [
+        "This should be worth watching.",
+        "Let's make this entertaining.",
+        "Roll the tape."
+    ],
+
+    "archive": [
+        "I've got plenty packed away.",
+        "Everything I need is stored inside.",
+        "Good luck getting through me."
+    ],
+
+    "script": [
+        "Executing.",
+        "I've already planned my next move.",
+        "You just triggered the wrong script."
+    ]
+}
+
+ENEMY_ENDINGS = [
+    "You're finished.",
+    "Prepare yourself.",
+    "This is your last mistake.",
+    "You won't get away.",
+    "Let's end this.",
+    "Your luck ends here.",
+    "You should have stayed away.",
+    "Nowhere to run.",
+    "Get ready.",
+    "This won't end well for you."
+]
