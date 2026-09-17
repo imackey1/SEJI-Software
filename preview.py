@@ -1,30 +1,29 @@
-# Quick window that shows what the scanner found -- just to check it
-# works before it's wired into the real game. Not part of the game
-# itself.
+# Quick window that shows what the scanner found just to check it
+# works before it's wired into the real game. Not part of the game itself
 import pygame
 from scanner.windows_scanner import scan_apps, icon_to_pygame_surface
 
-# --- window settings ---
+# window settings
 WINDOW_WIDTH = 900
 WINDOW_HEIGHT = 700
 BG_COLOR = (20, 20, 30)      # dark background
 ICON_SIZE = (48, 48)         # how big each icon shows up
-TILE_SIZE = 80               # space reserved for each icon + its name
+TILE_SIZE = 80               # space for each icon + its name
 PADDING = 20                 # gap between tiles
 COLS = 9                     # icons per row before wrapping
 
-# --- open the window ---
+# open the window
 pygame.init()
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Scanner Preview")
 font = pygame.font.SysFont(None, 14)
 clock = pygame.time.Clock()
 
-# --- run the scanner once, up front ---
+# run the scanner once
 apps = scan_apps()
 print(f"Found {len(apps)} apps")
 
-# work out where each icon+label goes on screen, once, so we don't
+# work out where each icon and label goes on screen so we don't
 # recalculate it 60 times a second in the loop below
 tiles = []
 for i, app in enumerate(apps):
@@ -40,7 +39,7 @@ for i, app in enumerate(apps):
     y = PADDING + row * (TILE_SIZE + PADDING)
     tiles.append((app["name"], surface, x, y))
 
-# --- the actual game loop: keeps the window open and redraws it ---
+# the actual game loop where it keeps the window open and redraws it
 running = True
 while running:
     for event in pygame.event.get():
