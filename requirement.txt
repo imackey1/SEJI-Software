@@ -1,0 +1,7 @@
+pygame -> this is what is used to opens the game window and draws images/text/shapes onto it.
+
+Pillow -> opens and resizes image files like the app icons we grab.
+pygame is picky about the formats so Pillow does the job of reading the icon file and handing pygame something it understands.
+
+icoextract -> a Windows .exe file has its icon stored inside the .exe itself.
+This library knows how to reach into the .exe and pull that icon out so Pillow can then open it like a normal image.
