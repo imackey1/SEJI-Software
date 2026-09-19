@@ -28,6 +28,67 @@ ATTACKS = [
     "BUFFER OVERLOAD!",
     "FORCE DELETE!",
     "DATA OVERLOAD!"
+    "CTRL ALT F4!",
+    "RAM RUSH!",
+    "FILE CRUSH!",
+    "SYSTEM CRASH!",
+    "PACKET STRIKE!",
+    "CODE BLAST!",
+    "MEMORY WIPE!",
+    "DISK SLAM!",
+    "PROCESS KILL!",
+    "STACK OVERFLOW!",
+    "FATAL ERROR!"
+]
+
+DAMAGE = [
+    "HEY! WATCH IT!",
+    "You actually hit me?!",
+    "That all you've got?",
+    "System integrity compromised!",
+    "That's gonna leave a mark.",
+    "I'm still standing!",
+    "Ow. Seriously?",
+    "ERROR: PAIN DETECTED!"
+]
+
+LOW_HEALTH = [
+    "I'm not going down yet!",
+    "This system is barely holding together!",
+    "I need a backup!",
+    "Warning: critical condition!",
+    "You won't delete me that easily!",
+    "I'm running out of space!",
+    "This isn't looking good..."
+]
+
+DODGES = [
+    "MISSED!",
+    "TOO SLOW!",
+    "NOT TODAY!",
+    "NICE TRY!",
+    "DODGED!",
+    "ACCESS DENIED!",
+    "404: HIT NOT FOUND!"
+]
+
+VICTORY = [
+    "K.O.!",
+    "SYSTEM VICTORY!",
+    "FILE DELETED!",
+    "THAT'S A WRAP!",
+    "YOU'VE BEEN DELETED!",
+    "CRITICAL HIT!",
+    "SUCCESSFUL TERMINATION!"
+]
+
+DEFEAT = [
+    "SYSTEM FAILURE...",
+    "FILE CORRUPTED...",
+    "CONNECTION LOST...",
+    "PROCESS TERMINATED.",
+    "GAME OVER.",
+    "ERROR 404: FILE NOT FOUND."
 ]
 
 TRAIT_PHRASES = {

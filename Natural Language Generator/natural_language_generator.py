@@ -1,6 +1,23 @@
 import random
 import dialogue_library as library
+import dialogue_situations as situations
 import metadata_interpreter as interpreter
+
+def generate_dialogue(metadata, situation):
+    if situation == situations.INTRO:
+        return generate_intro(metadata)
+    
+    elif situation == situations.ATTACK:
+        return random.choice(library.ATTACKS)
+
+    elif situation == situations.VICTORY:
+        return "You're finished."
+
+    elif situation == situations.DEFEAT:
+        return "This isn't over..."
+
+    else:
+        return "Prepare yourself."
 
 def generate_intro(metadata):
     traits = interpreter.interpret_metadata(metadata)
@@ -48,5 +65,6 @@ metadata = {
 }
 
 #test function
-print(generate_intro(metadata))
-print(generate_enemy_dialogue(metadata))
+# print(generate_intro(metadata))
+# print(generate_enemy_dialogue(metadata))
+print(generate_dialogue(metadata, situations.ATTACK))
