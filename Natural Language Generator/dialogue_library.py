@@ -27,7 +27,7 @@ ATTACKS = [
     "WALL OF TEXT!",
     "BUFFER OVERLOAD!",
     "FORCE DELETE!",
-    "DATA OVERLOAD!"
+    "DATA OVERLOAD!",
     "CTRL ALT F4!",
     "RAM RUSH!",
     "FILE CRUSH!",

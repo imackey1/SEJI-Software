@@ -74,6 +74,11 @@ metadata = {
 }
 
 #test function
-# print(generate_intro(metadata))
-# print(generate_enemy_dialogue(metadata))
+print(generate_intro(metadata))
+print(generate_enemy_dialogue(metadata))
 print(generate_dialogue(metadata, situations.ATTACK))
+print(generate_dialogue(metadata, situations.DAMAGE))
+print(generate_dialogue(metadata, situations.LOW_HEALTH))
+print(generate_dialogue(metadata, situations.DODGE))
+print(generate_dialogue(metadata, situations.VICTORY))
+print(generate_dialogue(metadata, situations.DEFEAT))
