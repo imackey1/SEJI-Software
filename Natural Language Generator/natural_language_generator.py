@@ -11,13 +11,13 @@ def generate_dialogue(metadata, situation, character_class = None):
         return generate_attack_dialogue(character_class)
 
     elif situation == situations.DAMAGE:
-        return random.choice(library.DAMAGE)
+        return generate_damage_dialogue(character_class)
 
     elif situation == situations.LOW_HEALTH:
-        return random.choice(library.LOW_HEALTH)
+        return generate_low_health_dialogue(character_class)
 
     elif situation == situations.DODGE:
-        return random.choice(library.DODGES)
+        return generate_dodge_dialogue(character_class)
     
     elif situation == situations.VICTORY:
         return random.choice(library.VICTORY)
@@ -33,6 +33,24 @@ def generate_attack_dialogue(character_class = None):
         return random.choice(library.CLASS_ATTACKS[character_class])
 
     return random.choice(library.ATTACKS)
+
+def generate_damage_dialogue(character_class = None):
+    if character_class in library.CLASS_DAMAGE:
+        return random.choice(library.CLASS_DAMAGE[character_class])
+
+    return random.choice(library.DAMAGE)
+
+def generate_low_health_dialogue(character_class = None):
+    if character_class in library.CLASS_LOW_HEALTH:
+        return random.choice(library.CLASS_LOW_HEALTH[character_class])
+
+    return random.choice(library.LOW_HEALTH)
+
+def generate_dodge_dialogue(character_class = None):
+    if character_class in library.CLASS_DODGES:
+        return random.choice(library.CLASS_DODGES[character_class])
+
+    return random.choice(library.DODGES)
 
 def generate_intro(metadata):
     traits = interpreter.interpret_metadata(metadata)
@@ -84,6 +102,7 @@ if __name__ == "__main__":
     print(generate_intro(metadata))
     print(generate_enemy_dialogue(metadata))
     print()
+    
     print(generate_dialogue(metadata, situations.ATTACK))
     print(generate_dialogue(metadata, situations.ATTACK, "Barbarian"))
     print(generate_dialogue(metadata, situations.ATTACK, "Mage"))
@@ -91,7 +110,22 @@ if __name__ == "__main__":
     print()
 
     print(generate_dialogue(metadata, situations.DAMAGE))
+    print(generate_dialogue(metadata, situations.DAMAGE, "Barbarian"))
+    print(generate_dialogue(metadata, situations.DAMAGE, "Mage"))
+    print(generate_dialogue(metadata, situations.DAMAGE, "Rogue"))
+    print()
+
     print(generate_dialogue(metadata, situations.LOW_HEALTH))
+    print(generate_dialogue(metadata, situations.LOW_HEALTH, "Barbarian"))
+    print(generate_dialogue(metadata, situations.LOW_HEALTH, "Mage"))
+    print(generate_dialogue(metadata, situations.LOW_HEALTH, "Rogue"))
+    print()
+
     print(generate_dialogue(metadata, situations.DODGE))
+    print(generate_dialogue(metadata, situations.DODGE, "Barbarian"))
+    print(generate_dialogue(metadata, situations.DODGE, "Mage"))
+    print(generate_dialogue(metadata, situations.DODGE, "Rogue"))
+    print()
+
     print(generate_dialogue(metadata, situations.VICTORY))
     print(generate_dialogue(metadata, situations.DEFEAT))

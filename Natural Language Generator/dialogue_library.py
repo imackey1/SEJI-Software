@@ -78,6 +78,34 @@ DAMAGE = [
     "ERROR: PAIN DETECTED!"
 ]
 
+CLASS_DAMAGE = {
+    "Barbarian": [
+        "THAT'S ALL YOU GOT?!",
+        "YOU'LL NEED MORE THAN THAT!",
+        "I CAN TAKE IT!",
+        "BARELY A SCRATCH!",
+        "YOU HIT HARDER THAN I EXPECTED!"
+    ],
+
+    "Mage": [
+        "MY DEFENSES ARE STILL ONLINE!",
+        "SPELL INTERRUPTED!",
+        "SYSTEM STABILITY: COMPROMISED!",
+        "MY SHIELDS ARE FAILING!",
+        "REBOOTING SHIELDS . . .",
+        "THAT DISTURBED MY SPELL!"
+    ],
+
+    "Rogue": [
+        "TOO CLOSE!",
+        "YOU ALMOST HAD ME!",
+        "NICE TRY!",
+        "REGAINING STEALTH . . .",
+        "WATCH WHERE YOU'RE AIMING!",
+        "YOU GOT LUCKY!"
+    ]
+}
+
 LOW_HEALTH = [
     "I'm not going down yet!",
     "This system is barely holding together!",
@@ -88,6 +116,34 @@ LOW_HEALTH = [
     "This isn't looking good..."
 ]
 
+CLASS_LOW_HEALTH = {
+    "Barbarian": [
+        "I'M NOT DONE YET!",
+        "YOU'LL HAVE TO HIT HARDER!",
+        "I CAN STILL FIGHT!",
+        "THIS IS JUST A SCRATCH!",
+        "I CAN TAKE THIS!",
+        "I REFUSE TO FALL!"
+    ],
+
+    "Mage": [
+        "MY MANA IS RUNNING LOW!",
+        "SYSTEM CRITICAL!",
+        "MY SPELLS ARE FALTERING!",
+        "I NEED MORE POWER!",
+        "SHEILD FAILURE!"
+        "MY DEFENSES ARE COLLAPSING!"
+    ],
+
+    "Rogue": [
+        "I NEED TO GET OUT OF HERE!",
+        "THIS IS GETTING TOO CLOSE!",
+        "TIME TO DISAPPEAR!",
+        "I'M RUNNING OUT OF OPTIONS!",
+        "I CAN'T TAKE ANOTHER HIT!"
+    ]
+}
+
 DODGES = [
     "MISSED!",
     "TOO SLOW!",
@@ -97,6 +153,33 @@ DODGES = [
     "ACCESS DENIED!",
     "404: HIT NOT FOUND!"
 ]
+
+CLASS_DODGES = {
+    "Barbarian": [
+        "MISSED ME!",
+        "TOO SLOW!",
+        "COME CLOSER!",
+        "YOU CALL THAT AN ATTACK?!",
+        "TRY HITTING HARDER!"
+    ],
+
+    "Mage": [
+        "SPELL DODGED!",
+        "YOUR ATTACK HAS BEEN NULLIFIED!",
+        "ACCESS DENIED!",
+        "SHIELDS ACTIVE",
+        "MAGICALLY AVOIDED!"
+    ],
+
+    "Rogue": [
+        "TOO SLOW!",
+        "NICE TRY!",
+        "NOT TODAY!",
+        "CAN'T CATCH ME!",
+        "YOU CAN'T HIT WHAT YOU CAN'T CATCH!",
+        "MISSED!"
+    ]
+}
 
 VICTORY = [
     "K.O.!",
