@@ -17,7 +17,7 @@ def generate_intro(metadata):
             )
 
     trait_phrase = random.choice(trait_phrases)
-        
+
     return f"{greeting} {trait_phrase} You {insult}"
 
 def generate_enemy_dialogue(metadata):
