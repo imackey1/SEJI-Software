@@ -41,6 +41,32 @@ ATTACKS = [
     "FATAL ERROR!"
 ]
 
+CLASS_ATTACKS = {
+    "Barbarian": [
+        "FILE SMASH!",
+        "DISK CRUSH!",
+        "RAW POWER!",
+        "HARD DRIVE HAMMER!",
+        "DESK SLAM!"
+    ],
+
+    "Mage": [
+        "CODE CAST!",
+        "STACK OVERFLOW!",
+        "SCRIPT STORM!",
+        "DATA SPELL!",
+        "SSD OVERLOAD!",
+        "CPU OVERLOAD!"
+    ],
+
+    "Rogue": [
+        "QUICK ACCESS!",
+        "HIDDEN FILE!",
+        "SHORTCUT STRIKE!",
+        "404 ATTACK!"
+    ]
+}
+
 DAMAGE = [
     "HEY! WATCH IT!",
     "You actually hit me?!",

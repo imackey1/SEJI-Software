@@ -3,12 +3,12 @@ import dialogue_library as library
 import dialogue_situations as situations
 import metadata_interpreter as interpreter
 
-def generate_dialogue(metadata, situation):
+def generate_dialogue(metadata, situation, character_class = None):
     if situation == situations.INTRO:
         return generate_intro(metadata)
     
     elif situation == situations.ATTACK:
-        return random.choice(library.ATTACKS)
+        return generate_attack_dialogue(character_class)
 
     elif situation == situations.DAMAGE:
         return random.choice(library.DAMAGE)
@@ -27,6 +27,12 @@ def generate_dialogue(metadata, situation):
 
     else:
         return "Prepare yourself."
+
+def generate_attack_dialogue(character_class = None):
+    if character_class in library.CLASS_ATTACKS:
+        return random.choice(library.CLASS_ATTACKS[character_class])
+
+    return random.choice(library.ATTACKS)
 
 def generate_intro(metadata):
     traits = interpreter.interpret_metadata(metadata)
@@ -77,7 +83,13 @@ metadata = {
 if __name__ == "__main__":
     print(generate_intro(metadata))
     print(generate_enemy_dialogue(metadata))
+    print()
     print(generate_dialogue(metadata, situations.ATTACK))
+    print(generate_dialogue(metadata, situations.ATTACK, "Barbarian"))
+    print(generate_dialogue(metadata, situations.ATTACK, "Mage"))
+    print(generate_dialogue(metadata, situations.ATTACK, "Rogue"))
+    print()
+
     print(generate_dialogue(metadata, situations.DAMAGE))
     print(generate_dialogue(metadata, situations.LOW_HEALTH))
     print(generate_dialogue(metadata, situations.DODGE))
