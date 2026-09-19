@@ -197,6 +197,7 @@ DEFEAT = [
     "CONNECTION LOST...",
     "PROCESS TERMINATED.",
     "GAME OVER.",
+    "REBOOTING . . .",
     "ERROR 404: FILE NOT FOUND."
 ]
 
