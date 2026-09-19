@@ -10,11 +10,20 @@ def generate_dialogue(metadata, situation):
     elif situation == situations.ATTACK:
         return random.choice(library.ATTACKS)
 
+    elif situation == situations.DAMAGE:
+        return random.choice(library.DAMAGE)
+
+    elif situation == situations.LOW_HEALTH:
+        return random.choice(library.LOW_HEALTH)
+
+    elif situation == situations.DODGE:
+        return random.choice(library.DODGES)
+    
     elif situation == situations.VICTORY:
-        return "You're finished."
+        return random.choice(library.VICTORY)
 
     elif situation == situations.DEFEAT:
-        return "This isn't over..."
+        return random.choice(library.DEFEAT)
 
     else:
         return "Prepare yourself."
