@@ -131,7 +131,7 @@ CLASS_LOW_HEALTH = {
         "SYSTEM CRITICAL!",
         "MY SPELLS ARE FALTERING!",
         "I NEED MORE POWER!",
-        "SHEILD FAILURE!"
+        "SHEILD FAILURE!",
         "MY DEFENSES ARE COLLAPSING!"
     ],
 
