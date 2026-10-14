@@ -2,7 +2,7 @@
 Readme · MD
 # Desktop Warfare: Scanner & Metadata Reader
  
-Part of **Desktop Warfare** by SEJI Software (Shermara, Evan, Jason, and Ibrahim), a roguelike that uses the player's own Windows desktop as the battlefield. This module is the first stage of the pipeline: it looks at what is on the desktop and turns it into clean data the rest of the game can use.
+Part of **Desktop Warfare** that uses the player's own Windows desktop as the battlefield. This module is the first stage of the pipeline: it looks at what is on the desktop and turns it into clean data the rest of the game can use.
  
 > **Status:** early development. Windows only for now.
  
@@ -57,15 +57,6 @@ python preview.py
 This opens a 900x700 window showing each app found by the scanner as an icon with its name underneath (names are cut to 10 characters). The console prints how many apps were found, plus a message for any icon that failed to load. Close the window to quit.
  
 ## Public functions
- 
-### `scan_apps()`
- 
-Runs the scanner once and returns a list of apps. Each app is a dictionary with at least:
- 
-| Key | Meaning |
-|---|---|
-| `name` | Display name of the app/file |
-| `icon_path` | Path to the icon source, or empty if none was found |
  
 ### `icon_to_pygame_surface(icon_path, size)`
  
