@@ -131,7 +131,7 @@ CLASS_LOW_HEALTH = {
         "SYSTEM CRITICAL!",
         "MY SPELLS ARE FALTERING!",
         "I NEED MORE POWER!",
-        "SHEILD FAILURE!",
+        "SHIELD FAILURE!",
         "MY DEFENSES ARE COLLAPSING!"
     ],
 
@@ -290,7 +290,45 @@ TRAIT_PHRASES = {
         "I've got a few commands for you.",
         "Let's execute this.",
         "I've already planned my next move."
+    ],
+
+    
+    "text_heavy": [
+        "I've got more words than you have patience.",
+        "Read carefully. There's a lot to unpack.",
+        "I could write a whole book about this fight."
+    ],
+
+    "hidden": [
+        "You weren't supposed to find me.",
+        "I'm much harder to track than I look.",
+        "Some things are better left hidden."
+    ],
+
+    "system": [
+        "I operate at the core of this machine.",
+        "System authority recognized.",
+        "You don't have permission to challenge me."
+    ],
+
+    "executable": [
+        "Double-click and watch what happens.",
+        "I was built to run the show.",
+        "Ready to launch."
+    ],
+
+    "backup": [
+        "You thought I was gone? I've got a backup.",
+        "Never underestimate a saved copy.",
+        "I keep a spare version of myself."
+    ],
+
+    "temporary": [
+        "I won't be here for long.",
+        "Enjoy this while it lasts.",
+        "Temporary file, permanent problem."
     ]
+
 }
 
 ENEMY_PHRASES = {
@@ -382,7 +420,45 @@ ENEMY_PHRASES = {
         "Executing.",
         "I've already planned my next move.",
         "You just triggered the wrong script."
+    ],
+
+    
+    "text_heavy": [
+        "Prepare yourself for a wall of text.",
+        "I've got a thousand things to say.",
+        "You'll never get through all my data."
+    ],
+
+    "hidden": [
+        "You'll never see me coming.",
+        "You should not have found this file.",
+        "Try fighting something you can't track."
+    ],
+
+    "system": [
+        "Critical system process engaged.",
+        "You are challenging system authority.",
+        "Access denied. Prepare for termination."
+    ],
+
+    "executable": [
+        "Execution begins now.",
+        "Ready to launch an attack.",
+        "Initiating combat sequence."
+    ],
+
+    "backup": [
+        "I always have another copy.",
+        "You can't erase every version of me.",
+        "I was prepared for this."
+    ],
+
+    "temporary": [
+        "Let's make this short.",
+        "I'm temporary, but you're still in danger.",
+        "My time is limited. Yours is too."
     ]
+
 }
 
 ENEMY_ENDINGS = [

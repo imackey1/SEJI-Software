@@ -66,9 +66,12 @@ def generate_intro(metadata):
                 random.choice(library.TRAIT_PHRASES[trait])
             )
 
-    trait_phrase = random.choice(trait_phrases)
+    if trait_phrases:
+        trait_phrase = random.choice(trait_phrases)
+    else:
+        trait_phrase = "I'm full of surprises."
 
-    return f"{greeting} {trait_phrase} You {insult}"
+    return f"{greeting} {trait_phrase} You're a {insult}"
 
 def generate_enemy_dialogue(metadata):
     traits = interpreter.interpret_metadata(metadata)
@@ -96,36 +99,3 @@ metadata = {
     "created": "2022-05-10",
     "modified": "2026-09-10"
 }
-
-#test function
-if __name__ == "__main__":
-    print(generate_intro(metadata))
-    print(generate_enemy_dialogue(metadata))
-    print()
-    
-    print(generate_dialogue(metadata, situations.ATTACK))
-    print(generate_dialogue(metadata, situations.ATTACK, "Barbarian"))
-    print(generate_dialogue(metadata, situations.ATTACK, "Mage"))
-    print(generate_dialogue(metadata, situations.ATTACK, "Rogue"))
-    print()
-
-    print(generate_dialogue(metadata, situations.DAMAGE))
-    print(generate_dialogue(metadata, situations.DAMAGE, "Barbarian"))
-    print(generate_dialogue(metadata, situations.DAMAGE, "Mage"))
-    print(generate_dialogue(metadata, situations.DAMAGE, "Rogue"))
-    print()
-
-    print(generate_dialogue(metadata, situations.LOW_HEALTH))
-    print(generate_dialogue(metadata, situations.LOW_HEALTH, "Barbarian"))
-    print(generate_dialogue(metadata, situations.LOW_HEALTH, "Mage"))
-    print(generate_dialogue(metadata, situations.LOW_HEALTH, "Rogue"))
-    print()
-
-    print(generate_dialogue(metadata, situations.DODGE))
-    print(generate_dialogue(metadata, situations.DODGE, "Barbarian"))
-    print(generate_dialogue(metadata, situations.DODGE, "Mage"))
-    print(generate_dialogue(metadata, situations.DODGE, "Rogue"))
-    print()
-
-    print(generate_dialogue(metadata, situations.VICTORY))
-    print(generate_dialogue(metadata, situations.DEFEAT))
