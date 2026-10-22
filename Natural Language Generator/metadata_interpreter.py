@@ -60,7 +60,7 @@ def interpret_metadata(metadata):
         traits.append("medium")
 
     else:
-         traits.append("large")
+        traits.append("large")
 
     # File types traits
     if file_type in {".exe", ".msi", ".app"}:
@@ -134,8 +134,10 @@ def interpret_metadata(metadata):
 
         if 0 <= modified_days < 30:
             traits.append("recently_modified")
+
         elif 30 <= modified_days < 365:
             traits.append("modified_this_year")
+
         elif modified_days >= 365:
             traits.append("stale")
 
