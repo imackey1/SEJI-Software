@@ -117,6 +117,59 @@ class TestDialogueGeneration(unittest.TestCase):
 
                 self.assertIsInstance(dialogue, str)
                 self.assertTrue(dialogue.strip())
+ 
+class TestMetadataEdgeCases(unittest.TestCase):
+
+    def test_missing_metadata(self):
+        self.assertEqual(interpreter.interpret_metadata(None), [])
+
+    def test_empty_dictionary(self):
+        traits = interpreter.interpret_metadata({})
+        self.assertIn("small", traits)
+
+    def test_unknown_extension(self):
+        metadata = {
+            "name": "mystery.xyz",
+            "extension": ".xyz",
+            "size_bytes": 500,
+        }
+
+        traits = interpreter.interpret_metadata(metadata)
+
+        self.assertIn("small", traits)
+        self.assertNotIn("document", traits)
+        self.assertNotIn("application", traits)
+
+    def test_invalid_size_and_word_count(self):
+        metadata = {
+            "name": "test.txt",
+            "extension": ".txt",
+            "size_bytes": "invalid",
+            "word_count": None,
+        }
+
+        traits = interpreter.interpret_metadata(metadata)
+
+        self.assertIn("small", traits)
+        self.assertIn("document", traits)
+        self.assertNotIn("text_heavy", traits)
+
+    def test_invalid_dates_are_ignored(self):
+        metadata = {
+            "name": "test.txt",
+            "extension": ".txt",
+            "size_bytes": 500,
+            "created": "not-a-date",
+            "modified": "invalid",
+        }
+
+        traits = interpreter.interpret_metadata(metadata)
+
+        self.assertNotIn("new", traits)
+        self.assertNotIn("old", traits)
+        self.assertNotIn("recently_modified", traits)
+        self.assertNotIn("stale", traits)
+
 
 
 if __name__ == "__main__":
