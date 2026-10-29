@@ -1,11 +1,14 @@
+# Run from the project root:
+#     python -m unittest discover -v
 
+import time
 import unittest
 from types import SimpleNamespace
 
-import dialogue_library as library
-import dialogue_situations as situations
-import metadata_interpreter as interpreter
-import natural_language_generator as nlg
+from nlg import dialogue_library as library
+from nlg import dialogue_situations as situations
+from nlg import metadata_interpreter as interpreter
+from nlg import natural_language_generator as nlg
 
 
 class TestMetadataInterpreter(unittest.TestCase):
@@ -172,7 +175,38 @@ class TestMetadataEdgeCases(unittest.TestCase):
 
 
 
+class TestWorksWithScannerAndClassifier(unittest.TestCase):
+    """The shapes the rest of the project actually hands to the NLG."""
+
+    def test_scanner_timestamps_produce_age_traits(self):
+        # scanner.DesktopItem gives created/modified as seconds since 1970
+        now = time.time()
+        metadata = SimpleNamespace(
+            name="Chrome",
+            filename="Chrome_backup.lnk",
+            extension=".lnk",
+            size_bytes=2_000,
+            is_hidden=False,
+            is_system=False,
+            word_count=0,
+            created=now - 3 * 365 * 24 * 3600,
+            modified=now - 2 * 24 * 3600,
+        )
+
+        traits = interpreter.interpret_metadata(metadata)
+
+        self.assertIn("old", traits)
+        self.assertIn("recently_modified", traits)
+        self.assertIn("backup", traits)  # read from the real filename, not the display name
+
+    def test_fighter_class_enum_gets_class_specific_lines(self):
+        class FakeFighterClass:  # stands in for classes_loot_equipment.FighterClass.MAGE
+            value = "Mage"
+
+        for _ in range(20):
+            line = nlg.generate_dialogue({}, situations.ATTACK, character_class=FakeFighterClass())
+            self.assertIn(line, library.CLASS_ATTACKS["Mage"])
+
+
 if __name__ == "__main__":
     unittest.main()
-
-# python -m unittest discover -s "Natural Language Generator" -p "test_*.py" -v

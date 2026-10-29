@@ -26,6 +26,13 @@ def parse_date(value):
     if isinstance(value, date):
         return value
 
+    # The scanner gives created/modified as seconds since 1970
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        try:
+            return datetime.fromtimestamp(value).date()
+        except (OverflowError, OSError, ValueError):
+            return None
+
     if not isinstance(value, str) or not value.strip():
         return None
 
@@ -48,7 +55,9 @@ def interpret_metadata(metadata):
     if file_type and not file_type.startswith("."):
         file_type = "." + file_type
 
-    file_name = str(get_value(metadata, "name", default="") or "").lower()
+    # "filename" is the real name on disk ("Chrome.lnk"); "name" may be the
+    # scanner's display name ("Chrome"). Prefer the real one.
+    file_name = str(get_value(metadata, "filename", "name", default="") or "").lower()
 
     word_count = safe_int(get_value(metadata, "word_count", default=0))
 
