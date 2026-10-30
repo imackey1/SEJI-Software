@@ -4,29 +4,40 @@ Turns a folder of real files into Desktop Warfare game objects: fighters
 (**Barbarian** / **Mage** / **Rogue**) and items (**Equipment** /
 **Grenade** / **Heal** / **Junk**).
 
+## Where it fits
+
+```
+scanner  ->  classes_loot_equipment  ->  nlg  ->  game  ->  ui
+             (this)
+```
+
+Input is the `scanner` package's `DesktopItem` list. The whole project
+shares that one record type, so there's no separate file-record class in here.
+
 ## Files
 
-- `metadata.py` — reads the raw per-file data everything else runs on:
-  size, the OS hidden/system attribute flags, and a rough word count for
-  file types we know how to read (`.txt`, `.md`, `.csv`, `.log`, `.docx`,
-  `.html`/`.htm`).
 - `classification.py` — the actual class/item decision rules. All of the
   tunable numbers and the extension tables live at the top of this file.
+- `metadata.py` — a thin compatibility layer over `scanner`. `FileRecord`
+  is now just another name for `scanner.DesktopItem`, and `scan_folder()`
+  calls the shared scanner. It no longer reads files itself.
 - `demo.py` — run this to sanity-check the rules against a real folder.
+- `tests/` — unit tests for the rules.
 - `__init__.py` — re-exports the public pieces so other modules can do
   `from classes_loot_equipment import classify_fighters, scan_folder`.
 
 ## Quick start
 
+From the project root:
+
 ```bash
-python -m classes_loot_equipment.demo                    # scans your real Desktop
+python -m classes_loot_equipment.demo                         # scans your real Desktop
 python -m classes_loot_equipment.demo "C:\path\to\folder"  # scans anywhere else
+python -m unittest discover -v                                # runs every test in the project
 ```
 
-Optional dependency: `pip install python-docx` if you want word counts
-pulled from real `.docx` files. Without it, `.docx` files just get a word
-count of 0 (they'll still get classified — Barbarian by size, most likely
-— they just won't be eligible for Mage until that's installed).
+Word counts for `.docx` come from the scanner, which reads them without
+any extra library, so python-docx is no longer needed.
 
 ## The rules, short version
 
@@ -41,6 +52,8 @@ count of 0 (they'll still get classified — Barbarian by size, most likely
    to overlook" path. This is what gives Rogue a real population instead
    of only ever catching the rare hidden-flag files.
 
+**Folders** are neither fighters nor items. They're skipped entirely.
+
 **Item role** (checked first — items never enter the fighter percentile
 pool at all)
 - **Equipment**: `.ini` `.cfg` `.json` `.xml` `.dll`
@@ -48,7 +61,8 @@ pool at all)
   when smaller than `SMALL_SCRIPT_SIZE_BYTES` (20 KB by default) — a
   bigger script/code file skips this and goes through fighter
   classification instead, since it's plausibly a real Mage-class file.
-- **Heal**: `.bak`, or any filename containing "backup", "copy", or "old"
+- **Heal**: `.bak`, or any real filename (not the display name) containing
+  "backup", "copy", or "old"
 - **Junk**: `.tmp` `.cache` `.log`
 
 **Rogue-only fighter extensions** — always Rogue if they end up in
@@ -65,5 +79,5 @@ text-heavy HTML page can still score high enough to become a Mage.
 Every extension table and both tunable numbers live at the top of
 `classification.py` — that's the one file to touch. Please don't
 re-decide any of this in a different module; if a rule needs to change,
-change it here so metadata-reader, combat-testing, and UI/UX are all
+change it here so metadata-reader, NLG, the game glue, and UI/UX are all
 still reading from the same source of truth.

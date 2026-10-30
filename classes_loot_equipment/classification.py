@@ -32,6 +32,12 @@ SMALL_SCRIPT_SIZE_BYTES they're Grenades (quick one-off scripts). At or
 above it, they skip the item check and go through fighter classification
 instead - large enough to plausibly be a real Mage-class codebase file,
 not just a utility script.
+
+Folders are neither fighters nor items. They're left out of the results
+entirely and never enter the percentile pool.
+
+Input: a list of `scanner.DesktopItem` (the one record type the whole
+project shares - see scanner/README.md).
 """
 
 from __future__ import annotations
@@ -41,7 +47,10 @@ from enum import Enum
 from pathlib import Path
 from typing import Optional
 
-from .metadata import FileRecord
+from scanner import DesktopItem
+
+# Older name, kept so existing type hints and imports still read naturally.
+FileRecord = DesktopItem
 
 # ---------------------------------------------------------------------------
 # Tunables - move these to a config file once combat-testing wants to tune
@@ -102,6 +111,13 @@ class ClassificationResult:
     reason: str = ""  # short human-readable explanation - handy for QA/debugging
 
 
+def _real_filename(record: FileRecord) -> str:
+    # DesktopItem.name is the display name ("Chrome" for "Chrome.lnk");
+    # DesktopItem.filename is what's actually on disk. Name-based rules
+    # should look at the real filename.
+    return getattr(record, "filename", None) or record.name
+
+
 def _name_hints_backup(name: str) -> bool:
     lowered = name.lower()
     return any(hint in lowered for hint in HEAL_NAME_HINTS)
@@ -120,7 +136,7 @@ def classify_item_role(record: FileRecord) -> Optional[ItemRole]:
     if ext in SMALL_SCRIPT_EXTENSIONS and record.size_bytes < SMALL_SCRIPT_SIZE_BYTES:
         return ItemRole.GRENADE
 
-    if ext in HEAL_EXTENSIONS or _name_hints_backup(record.name):
+    if ext in HEAL_EXTENSIONS or _name_hints_backup(_real_filename(record)):
         return ItemRole.HEAL
 
     if ext in JUNK_EXTENSIONS:
@@ -150,6 +166,9 @@ def classify_fighters(records: list[FileRecord]) -> dict[Path, ClassificationRes
     # "text-heavy" means for the remaining fighters.
     fighter_candidates: list[FileRecord] = []
     for record in records:
+        if getattr(record, "is_folder", False):
+            continue  # folders are neither fighters nor items
+
         item_role = classify_item_role(record)
         if item_role is not None:
             results[record.path] = ClassificationResult(
