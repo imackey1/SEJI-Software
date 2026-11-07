@@ -303,6 +303,43 @@ class TestWorksWithScannerAndClassifier(unittest.TestCase):
 
                     self.assertIn(dialogue, expected_lines)
 
+    
+    def test_trait_dialogue_is_used_when_no_class_trait_match(self):
+        metadata = {
+            "name": "large_file.bin",
+            "extension": ".bin",
+            "size_bytes": 150_000_000,
+        }
+
+        expected_lines = library.TRAIT_COMBAT_DIALOGUE["attack"]["large"]
+
+        for _ in range(20):
+            dialogue = nlg.generate_dialogue(
+                metadata,
+                situations.ATTACK,
+                character_class="Mage",
+            )
+
+            self.assertIn(dialogue, expected_lines)
+
+    def test_generic_dialogue_is_used_when_no_other_match(self):
+        metadata = {
+            "name": "unknown.bin",
+            "extension": ".bin",
+            "size_bytes": 500,
+        }
+
+        expected_lines = library.ATTACKS
+
+        for _ in range(20):
+            dialogue = nlg.generate_dialogue(
+                metadata,
+                situations.ATTACK,
+                character_class="Unknown",
+            )
+
+            self.assertIn(dialogue, expected_lines)
+
 
 
 if __name__ == "__main__":
