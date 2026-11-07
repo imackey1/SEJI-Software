@@ -20,16 +20,24 @@ def generate_dialogue(metadata, situation, character_class = None):
         return generate_enemy_dialogue(metadata)
     
     elif situation == situations.ATTACK:
-        return generate_attack_dialogue(character_class)
+        return _generate_combat_dialogue(
+            metadata, situations.ATTACK, character_class
+        )
 
     elif situation == situations.DAMAGE:
-        return generate_damage_dialogue(character_class)
+        return _generate_combat_dialogue(
+            metadata, situations.DAMAGE, character_class
+        )
 
     elif situation == situations.LOW_HEALTH:
-        return generate_low_health_dialogue(character_class)
+        return _generate_combat_dialogue(
+            metadata, situations.LOW_HEALTH, character_class
+        )
 
     elif situation == situations.DODGE:
-        return generate_dodge_dialogue(character_class)
+        return _generate_combat_dialogue(
+            metadata, situations.DODGE, character_class
+        )
     
     elif situation == situations.VICTORY:
         return random.choice(library.VICTORY)
@@ -106,3 +114,46 @@ def generate_enemy_dialogue(metadata):
     ending = random.choice(library.ENEMY_ENDINGS)
 
     return f"{phrase} {ending}" 
+
+def _generate_combat_dialogue(metadata, situation, character_class=None):
+    character_class = _class_name(character_class)
+    traits = interpreter.interpret_metadata(metadata)
+
+    # First priority: class + metadata trait combination.
+    class_dialogue = library.CLASS_TRAIT_COMBAT_DIALOGUE.get(
+        character_class, {}
+    ).get(situation, {})
+
+    for trait in traits:
+        if trait in class_dialogue:
+            return random.choice(class_dialogue[trait])
+
+    # Second priority: metadata trait dialogue.
+    trait_dialogue = library.TRAIT_COMBAT_DIALOGUE.get(situation, {})
+
+    for trait in traits:
+        if trait in trait_dialogue:
+            return random.choice(trait_dialogue[trait])
+
+    # Third priority: existing class-specific dialogue.
+    class_dialogue_fallbacks = {
+        situations.ATTACK: library.CLASS_ATTACKS,
+        situations.DAMAGE: library.CLASS_DAMAGE,
+        situations.LOW_HEALTH: library.CLASS_LOW_HEALTH,
+        situations.DODGE: library.CLASS_DODGES,
+    }
+
+    generic_fallbacks = {
+        situations.ATTACK: library.ATTACKS,
+        situations.DAMAGE: library.DAMAGE,
+        situations.LOW_HEALTH: library.LOW_HEALTH,
+        situations.DODGE: library.DODGES,
+    }
+
+    class_lines = class_dialogue_fallbacks[situation]
+
+    if character_class in class_lines:
+        return random.choice(class_lines[character_class])
+
+    # Final priority: existing generic dialogue.
+    return random.choice(generic_fallbacks[situation])

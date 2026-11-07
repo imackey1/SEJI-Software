@@ -473,3 +473,187 @@ ENEMY_ENDINGS = [
     "Get ready.",
     "This won't end well for you."
 ]
+
+# Metadata-based combat dialogue
+# Used when no class-specific metadata line is available.
+
+TRAIT_COMBAT_DIALOGUE = {
+    "attack": {
+        "large": [
+            "ALL THAT DATA, ALL THAT DAMAGE!",
+            "OVERWHELMING FILE SIZE!",
+        ],
+        "script": [
+            "EXECUTING ATTACK SEQUENCE!",
+            "RUNNING DAMAGE COMMAND!",
+        ],
+        "executable": [
+            "LAUNCHING ATTACK!",
+            "EXECUTION IN PROGRESS!",
+        ],
+        "hidden": [
+            "SURPRISE ATTACK!",
+            "YOU NEVER SAW THAT COMING!",
+        ],
+        "backup": [
+            "I'VE GOT ANOTHER COPY OF THIS ATTACK!",
+            "BACKUP POWER ACTIVATED!",
+        ],
+    },
+
+    "damage": {
+        "large": [
+            "THAT BARELY MADE A DENT IN MY DATA!",
+            "YOU'LL NEED MORE THAN THAT TO WIPE ME!",
+        ],
+        "script": [
+            "ERROR! THAT WASN'T IN MY SCRIPT!",
+            "INTERRUPTED, BUT STILL RUNNING!",
+        ],
+        "executable": [
+            "MY PROCESS IS STILL RUNNING!",
+            "EXECUTION NOT TERMINATED!",
+        ],
+        "hidden": [
+            "YOU FOUND ME, BUT YOU HAVEN'T BEATEN ME!",
+            "I'M STILL HIDING IN THE SYSTEM!",
+        ],
+        "backup": [
+            "I STILL HAVE A BACKUP!",
+            "YOU HAVEN'T DELETED THE ORIGINAL!",
+        ],
+    },
+
+    "low_health": {
+        "large": [
+            "MY DATA IS RUNNING OUT!",
+            "I'M LOSING TOO MUCH STORAGE!",
+        ],
+        "script": [
+            "CRITICAL ERROR! SCRIPT FAILURE IMMINENT!",
+            "MY COMMANDS ARE STARTING TO FAIL!",
+        ],
+        "executable": [
+            "EXECUTION FAILURE IMMINENT!",
+            "PROCESS STATUS: CRITICAL!",
+        ],
+        "hidden": [
+            "I NEED TO DISAPPEAR BEFORE I'M DELETED!",
+            "MY HIDING PLACE ISN'T SAFE ANYMORE!",
+        ],
+        "backup": [
+            "I NEED TO RESTORE FROM BACKUP!",
+            "THIS COPY IS ALMOST GONE!",
+        ],
+    },
+
+    "dodge": {
+        "large": [
+            "TOO MUCH DATA FOR YOU TO HIT!",
+            "YOU CAN'T HANDLE ALL THIS!",
+        ],
+        "script": [
+            "COMMAND AVOIDED!",
+            "YOUR ATTACK WAS NOT EXECUTED!",
+        ],
+        "executable": [
+            "PROCESS MOVED OUT OF RANGE!",
+            "EXECUTION DODGED!",
+        ],
+        "hidden": [
+            "YOU CAN'T HIT WHAT YOU CAN'T FIND!",
+            "VANISHED FROM YOUR SEARCH!",
+        ],
+        "backup": [
+            "WRONG COPY!",
+            "YOU HIT MY BACKUP LOCATION!",
+        ],
+    },
+}
+
+
+# Special dialogue when both the character class and metadata trait match.
+# These lines take priority over the general trait dialogue above.
+
+CLASS_TRAIT_COMBAT_DIALOGUE = {
+    "Barbarian": {
+        "attack": {
+            "large": [
+                "BIG FILE! BIGGER IMPACT!",
+                "RAW DATA SMASH!",
+            ],
+            "backup": [
+                "I'LL SMASH YOU WITH EVERY COPY!",
+            ],
+        },
+        "damage": {
+            "large": [
+                "YOU CALL THAT DAMAGE?! I'M MASSIVE!",
+            ],
+        },
+        "low_health": {
+            "large": [
+                "I'M STILL THE BIGGEST FILE HERE!",
+            ],
+        },
+        "dodge": {
+            "large": [
+                "TOO BIG TO MISS? TOO BAD!",
+            ],
+        },
+    },
+
+    "Mage": {
+        "attack": {
+            "script": [
+                "SCRIPT STORM!",
+                "STACK OVERFLOW BLAST!",
+            ],
+            "executable": [
+                "EXECUTE: DESTRUCTION!",
+            ],
+        },
+        "damage": {
+            "script": [
+                "MY CODE IS STILL INTACT!",
+            ],
+        },
+        "low_health": {
+            "script": [
+                "SYSTEM WARNING! MANA DEPLETED!",
+            ],
+        },
+        "dodge": {
+            "script": [
+                "YOUR ATTACK FAILED TO COMPILE!",
+            ],
+        },
+    },
+
+    "Rogue": {
+        "attack": {
+            "hidden": [
+                "SILENT FILE STRIKE!",
+                "HIDDEN ACCESS ATTACK!",
+            ],
+            "backup": [
+                "YOU'RE FIGHTING THE WRONG COPY!",
+            ],
+        },
+        "damage": {
+            "hidden": [
+                "YOU'LL NEVER CATCH MY REAL LOCATION!",
+            ],
+        },
+        "low_health": {
+            "hidden": [
+                "TIME TO DISAPPEAR INTO THE FILE SYSTEM!",
+            ],
+        },
+        "dodge": {
+            "hidden": [
+                "YOU CAN'T HIT A HIDDEN FILE!",
+            ],
+        },
+    },
+}

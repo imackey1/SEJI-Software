@@ -207,6 +207,51 @@ class TestWorksWithScannerAndClassifier(unittest.TestCase):
             line = nlg.generate_dialogue({}, situations.ATTACK, character_class=FakeFighterClass())
             self.assertIn(line, library.CLASS_ATTACKS["Mage"])
 
+    def test_class_and_metadata_combat_dialogue(self):
+        metadata = {
+            "name": "spell.py",
+            "extension": ".py",
+            "size_bytes": 5_000,
+        }
+
+        dialogue = nlg.generate_dialogue(
+            metadata,
+            situations.ATTACK,
+            character_class="Mage",
+        )
+
+        self.assertIn(
+            dialogue,
+            library.CLASS_TRAIT_COMBAT_DIALOGUE["Mage"]["attack"]["script"]
+        )
+
+    def test_metadata_combat_dialogue_without_class_match(self):
+        metadata = {
+            "name": "large_file.bin",
+            "extension": ".bin",
+            "size_bytes": 150_000_000,
+        }
+
+        dialogue = nlg.generate_dialogue(
+            metadata,
+            situations.ATTACK,
+            character_class="Unknown",
+        )
+
+        self.assertIn(
+            dialogue,
+            library.TRAIT_COMBAT_DIALOGUE["attack"]["large"]
+        )
+
+    def test_existing_class_dialogue_is_fallback(self):
+        dialogue = nlg.generate_dialogue(
+            {},
+            situations.ATTACK,
+            character_class="Mage",
+        )
+
+        self.assertIn(dialogue, library.CLASS_ATTACKS["Mage"])
+
 
 if __name__ == "__main__":
     unittest.main()
