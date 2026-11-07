@@ -252,6 +252,58 @@ class TestWorksWithScannerAndClassifier(unittest.TestCase):
 
         self.assertIn(dialogue, library.CLASS_ATTACKS["Mage"])
 
+    
+    def test_class_trait_dialogue_for_all_combat_situations(self):
+        metadata = {
+            "name": "spell.py",
+            "extension": ".py",
+            "size_bytes": 5_000,
+        }
+
+        test_cases = {
+            situations.ATTACK: library.CLASS_TRAIT_COMBAT_DIALOGUE["Mage"]["attack"]["script"],
+            situations.DAMAGE: library.CLASS_TRAIT_COMBAT_DIALOGUE["Mage"]["damage"]["script"],
+            situations.LOW_HEALTH: library.CLASS_TRAIT_COMBAT_DIALOGUE["Mage"]["low_health"]["script"],
+            situations.DODGE: library.CLASS_TRAIT_COMBAT_DIALOGUE["Mage"]["dodge"]["script"],
+        }
+
+        for situation, expected_lines in test_cases.items():
+            with self.subTest(situation=situation):
+                for _ in range(20):
+                    dialogue = nlg.generate_dialogue(
+                        metadata,
+                        situation,
+                        character_class="Mage",
+                    )
+
+                    self.assertIn(dialogue, expected_lines)
+
+    def test_trait_dialogue_for_all_combat_situations(self):
+        metadata = {
+            "name": "large_file.bin",
+            "extension": ".bin",
+            "size_bytes": 150_000_000,
+        }
+
+        test_cases = {
+            situations.ATTACK: library.TRAIT_COMBAT_DIALOGUE["attack"]["large"],
+            situations.DAMAGE: library.TRAIT_COMBAT_DIALOGUE["damage"]["large"],
+            situations.LOW_HEALTH: library.TRAIT_COMBAT_DIALOGUE["low_health"]["large"],
+            situations.DODGE: library.TRAIT_COMBAT_DIALOGUE["dodge"]["large"],
+        }
+
+        for situation, expected_lines in test_cases.items():
+            with self.subTest(situation=situation):
+                for _ in range(20):
+                    dialogue = nlg.generate_dialogue(
+                        metadata,
+                        situation,
+                        character_class="Unknown",
+                    )
+
+                    self.assertIn(dialogue, expected_lines)
+
+
 
 if __name__ == "__main__":
     unittest.main()
