@@ -8,15 +8,19 @@ from .windows_scanner import (
     DesktopItem,
     get_desktop_folders,
     icon_to_pygame_surface,
+    read_item,
     scan_apps,
     scan_desktop,
     scan_folder,
 )
+from .word_count import count_words
 
 __all__ = [
     "DesktopItem",
+    "count_words",
     "get_desktop_folders",
     "icon_to_pygame_surface",
+    "read_item",
     "scan_apps",
     "scan_desktop",
     "scan_folder",

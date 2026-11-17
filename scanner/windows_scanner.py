@@ -17,6 +17,7 @@ SKIP_NAMES = {"desktop.ini", "thumbs.db"}  # Windows clutter, not real files
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp", ".gif", ".webp", ".ico"}
 NAME_STRIP_EXTENSIONS = {".lnk", ".url", ".exe"}  # Explorer hides these, so we do too
 ICON_CACHE_DIR = Path(tempfile.gettempdir()) / "desktop_warfare_icons"
+WORD_COUNT_CACHE_DIR = Path(tempfile.gettempdir()) / "desktop_warfare_word_counts"
 
 FILE_ATTRIBUTE_HIDDEN = 0x2
 FILE_ATTRIBUTE_SYSTEM = 0x4
@@ -49,7 +50,12 @@ class DesktopItem:
         return self.is_hidden or self.is_system
 
     def to_dict(self) -> dict:
-        return asdict(self)
+        # asdict keeps Path objects, which json can't write, so turn them into text
+        data = asdict(self)
+        for key in ("path", "icon_path"):
+            if data[key] is not None:
+                data[key] = str(data[key])
+        return data
 
 
 def _known_folder_path(folder_id: str) -> Optional[Path]:
@@ -202,7 +208,8 @@ def _cached_word_count(path: Path, extension: str) -> int:
         return _count_words(path, extension)
 
 
-def _read_item(entry, extract_icons: bool, read_word_counts: bool = True) -> Optional[DesktopItem]:
+def read_item(entry, extract_icons: bool = True, read_word_counts: bool = True) -> Optional[DesktopItem]:
+    """Build a DesktopItem from one os.DirEntry. Returns None if it should be skipped."""
     filename = entry.name
     if filename.lower() in SKIP_NAMES:
         return None
@@ -264,16 +271,30 @@ def scan_folder(
 
     items = []
     for entry in entry_list:
-        item = _read_item(entry, extract_icons, read_word_counts)
+        item = read_item(entry, extract_icons, read_word_counts)
         if item is not None:
             items.append(item)
     return sorted(items, key=lambda item: item.name.lower())
 
 
+# Old private name, kept because classes_loot_equipment imports it from here.
+_read_item = read_item
+
+
 def scan_desktop(extract_icons: bool = True, read_word_counts: bool = True) -> list[DesktopItem]:
     items = []
+    seen = set()
     for folder in get_desktop_folders():
-        items.extend(scan_folder(folder, extract_icons, read_word_counts))
+        for item in scan_folder(folder, extract_icons, read_word_counts):
+            # The desktop is two folders merged, so the same name can turn up
+            # twice. Keep the first one: your own Desktop is scanned before
+            # the shared Public one. Anything downstream counts these, so a
+            # duplicate would also skew the size and word-count percentiles.
+            key = item.filename.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            items.append(item)
     return sorted(items, key=lambda item: item.name.lower())
 
 
