@@ -164,7 +164,6 @@ def _generate_combat_dialogue(metadata, situation, character_class=None):
     # Final priority: existing generic dialogue.
     return random.choice(generic_fallbacks[situation])
 
-
 def generate_recruitment_offer(character_class=None):
     character_class = _class_name(character_class)
 
