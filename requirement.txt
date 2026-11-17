@@ -1,0 +1,20 @@
+-# pygame: opens the game window and draws images/text/shapes
+-
+-# Pillow: opens and resizes icon files for pygame
+-
+-# icoextract: pulls the icon out of a Windows .exe
++# pygame: opens the game window and draws images/text/shapes
++pygame
++
++# Pillow: opens and resizes icon files for pygame
++Pillow
++
++# icoextract: pulls the icon out of a Windows .exe
++icoextract
++
++# pywin32: reads where a Windows .lnk shortcut points.
++# Only installed on Windows, because it does not build anywhere else.
++pywin32; sys_platform == "win32"
++
++# pytest: runs the tests in Test/
++pytest
