@@ -181,6 +181,26 @@ def _display_name(filename: str, extension: str, is_folder: bool) -> str:
         return filename[: -len(extension)]
     return filename
 
+def _cached_word_count(path: Path, extension: str) -> int:
+    # Counting means opening the file, which is the slowest part of a scan.
+    # Cache the number on disk, keyed the same way as the icon cache so an
+    # edited file misses and gets counted again.
+    try:
+        stat = path.stat()
+        key = f"{str(path).lower()}|{stat.st_mtime_ns}|{stat.st_size}|{extension}"
+        cached = WORD_COUNT_CACHE_DIR / (hashlib.sha1(key.encode("utf-8")).hexdigest() + ".txt")
+        if cached.exists():
+            return int(cached.read_text(encoding="utf-8").strip())
+
+        count = _count_words(path, extension)
+        # 0 is also what an unreadable or locked file returns, so never cache it
+        if count:
+            WORD_COUNT_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+            cached.write_text(str(count), encoding="utf-8")
+        return count
+    except (OSError, ValueError):  # a broken cache must never break a scan
+        return _count_words(path, extension)
+
 
 def _read_item(entry, extract_icons: bool, read_word_counts: bool = True) -> Optional[DesktopItem]:
     filename = entry.name
@@ -213,7 +233,7 @@ def _read_item(entry, extract_icons: bool, read_word_counts: bool = True) -> Opt
     # Never open folders, hidden/system files, or online-only files
     word_count = 0
     if read_word_counts and can_open and extension in WORD_COUNT_EXTENSIONS:
-        word_count = _count_words(path, extension)
+        word_count = _cached_word_count(path, extension)
 
     return DesktopItem(
         path=path,

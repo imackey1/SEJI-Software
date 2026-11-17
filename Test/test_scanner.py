@@ -109,3 +109,42 @@ def test_to_dict_is_safe_to_turn_into_json(tmp_path):
         assert isinstance(data["path"], str)
         assert data["icon_path"] is None
         json.dumps(data)  # the whole point: this must not raise
+
+def test_word_count_is_cached_between_scans(tmp_path, monkeypatch):
+    desktop = tmp_path / "desktop"
+    desktop.mkdir()
+    (desktop / "notes.txt").write_text("anything")
+
+    cache_dir = tmp_path / "cache"
+    monkeypatch.setattr("scanner.windows_scanner.WORD_COUNT_CACHE_DIR", cache_dir)
+
+    counted = []
+
+    def fake_count_words(path, extension):
+        counted.append(path)
+        return 42
+
+    monkeypatch.setattr("scanner.windows_scanner._count_words", fake_count_words)
+
+    first = scan_folder(desktop, extract_icons=False)
+    second = scan_folder(desktop, extract_icons=False)
+
+    assert first[0].word_count == 42
+    assert second[0].word_count == 42
+    assert len(counted) == 1  # the second scan read the cached number instead
+    assert list(cache_dir.iterdir())  # the number really was written to disk
+
+
+def test_edited_file_is_counted_again_instead_of_using_stale_cache(tmp_path, monkeypatch):
+    desktop = tmp_path / "desktop"
+    desktop.mkdir()
+    notes = desktop / "notes.txt"
+    monkeypatch.setattr(
+        "scanner.windows_scanner.WORD_COUNT_CACHE_DIR", tmp_path / "cache"
+    )
+
+    notes.write_text("one two")
+    assert scan_folder(desktop, extract_icons=False)[0].word_count == 2
+
+    notes.write_text("one two three four five")
+    assert scan_folder(desktop, extract_icons=False)[0].word_count == 5
