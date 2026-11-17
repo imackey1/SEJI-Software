@@ -18,6 +18,12 @@ def generate_dialogue(metadata, situation, character_class = None):
 
     elif situation == situations.ENEMY_INTRO:
         return generate_enemy_dialogue(metadata)
+
+    elif situation == situations.RECRUITMENT_OFFER:
+        return generate_recruitment_offer(character_class) 
+
+    elif situation == situations.RECRUITMENT_RESPONSE:
+        return generate_recruitment_response(metadata, character_class)
     
     elif situation == situations.ATTACK:
         return _generate_combat_dialogue(
@@ -157,3 +163,44 @@ def _generate_combat_dialogue(metadata, situation, character_class=None):
 
     # Final priority: existing generic dialogue.
     return random.choice(generic_fallbacks[situation])
+
+
+def generate_recruitment_offer(character_class=None):
+    character_class = _class_name(character_class)
+
+    if character_class in library.CLASS_RECRUITMENT_OFFERS:
+        return random.choice(
+            library.CLASS_RECRUITMENT_OFFERS[character_class]
+        )
+
+    return random.choice(library.RECRUITMENT_OFFERS)
+
+
+def generate_recruitment_response(metadata, character_class=None):
+    character_class = _class_name(character_class)
+    traits = interpreter.interpret_metadata(metadata)
+
+    # First priority: specific metadata traits.
+    trait_priority = [
+        "hidden",
+        "backup",
+        "script",
+        "executable",
+        "large",
+        "small",
+    ]
+
+    for trait in trait_priority:
+        if trait in traits and trait in library.TRAIT_RECRUITMENT_RESPONSES:
+            return random.choice(
+                library.TRAIT_RECRUITMENT_RESPONSES[trait]
+            )
+
+    # Second priority: class-specific recruitment response.
+    if character_class in library.CLASS_RECRUITMENT_RESPONSES:
+        return random.choice(
+            library.CLASS_RECRUITMENT_RESPONSES[character_class]
+        )
+
+    # Final priority: generic response.
+    return random.choice(library.RECRUITMENT_RESPONSES)

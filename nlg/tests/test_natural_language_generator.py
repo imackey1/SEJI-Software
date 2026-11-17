@@ -341,6 +341,111 @@ class TestWorksWithScannerAndClassifier(unittest.TestCase):
             self.assertIn(dialogue, expected_lines)
 
 
+class TestRecruitmentDialogue(unittest.TestCase):
+
+    def test_recruitment_offer_for_all_classes(self):
+        for character_class in ["Barbarian", "Mage", "Rogue"]:
+            with self.subTest(character_class=character_class):
+                for _ in range(20):
+                    dialogue = nlg.generate_dialogue(
+                        {},
+                        situations.RECRUITMENT_OFFER,
+                        character_class=character_class,
+                    )
+
+                    self.assertIn(
+                        dialogue,
+                        library.CLASS_RECRUITMENT_OFFERS[character_class]
+                    )
+
+    def test_generic_recruitment_offer_without_class(self):
+        for _ in range(20):
+            dialogue = nlg.generate_dialogue(
+                {},
+                situations.RECRUITMENT_OFFER,
+            )
+
+            self.assertIn(dialogue, library.RECRUITMENT_OFFERS)
+
+    def test_recruitment_response_uses_metadata_trait(self):
+        metadata = {
+            "name": "helper.py",
+            "extension": ".py",
+            "size_bytes": 5_000,
+        }
+
+        for _ in range(20):
+            dialogue = nlg.generate_dialogue(
+                metadata,
+                situations.RECRUITMENT_RESPONSE,
+                character_class="Mage",
+            )
+
+            self.assertIn(
+                dialogue,
+                library.TRAIT_RECRUITMENT_RESPONSES["script"]
+            )
+
+    def test_recruitment_response_uses_class_fallback(self):
+        metadata = {
+            "name": "notes.txt",
+            "extension": ".txt",
+            "size_bytes": 5_000_000,
+        }
+
+        for _ in range(20):
+            dialogue = nlg.generate_dialogue(
+                metadata,
+                situations.RECRUITMENT_RESPONSE,
+                character_class="Mage",
+            )
+
+            self.assertIn(
+                dialogue,
+                library.CLASS_RECRUITMENT_RESPONSES["Mage"]
+            )
+
+    def test_generic_recruitment_response_fallback(self):
+        metadata = {
+            "name": "notes.txt",
+            "extension": ".txt",
+            "size_bytes": 5_000_000,
+        }
+
+        for _ in range(20):
+            dialogue = nlg.generate_dialogue(
+                metadata,
+                situations.RECRUITMENT_RESPONSE,
+                character_class="Unknown",
+            )
+
+            self.assertIn(
+                dialogue,
+                library.RECRUITMENT_RESPONSES
+            )
+
+    def test_recruitment_response_for_all_classes(self):
+        metadata = {
+            "name": "notes.txt",
+            "extension": ".txt",
+            "size_bytes": 5_000_000,
+        }
+
+        for character_class in ["Barbarian", "Mage", "Rogue"]:
+            with self.subTest(character_class=character_class):
+                for _ in range(20):
+                    dialogue = nlg.generate_dialogue(
+                        metadata,
+                        situations.RECRUITMENT_RESPONSE,
+                        character_class=character_class,
+                    )
+
+                    self.assertIn(
+                        dialogue,
+                        library.CLASS_RECRUITMENT_RESPONSES[character_class]
+                    )
+
+
 
 if __name__ == "__main__":
     unittest.main()

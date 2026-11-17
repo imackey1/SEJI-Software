@@ -657,3 +657,95 @@ CLASS_TRAIT_COMBAT_DIALOGUE = {
         },
     },
 }
+
+# Recruitment dialogue
+# Dialogue spoken by the player when inviting an enemy to join.
+RECRUITMENT_OFFERS = [
+    "You've put up a good fight. Want to work together?",
+    "You seem useful. How about joining my team?",
+    "I could use someone with your abilities.",
+    "Why keep fighting when we could work together?",
+    "You've earned my respect. Join us.",
+]
+
+CLASS_RECRUITMENT_OFFERS = {
+    "Barbarian": [
+        "You're strong. Fight alongside me instead.",
+        "I like your strength. Join my team!",
+        "We could use another fighter like you.",
+    ],
+
+    "Mage": [
+        "Your abilities are impressive. Join my team.",
+        "Your skills could be valuable to our group.",
+        "Perhaps we can accomplish more together.",
+    ],
+
+    "Rogue": [
+        "You've got some useful tricks. Interested?",
+        "You seem clever. Let's work together.",
+        "Why fight when we can both benefit?",
+    ],
+}
+
+# Dialogue spoken by the recruited file.
+RECRUITMENT_RESPONSES = [
+    "Alright. I'll join you.",
+    "You've convinced me. Let's work together.",
+    "I suppose a change of scenery wouldn't hurt.",
+    "Fine. I'll fight alongside you.",
+    "You've earned my trust. Count me in.",
+]
+
+CLASS_RECRUITMENT_RESPONSES = {
+    "Barbarian": [
+        "Fine! I'll fight alongside you!",
+        "You need strength? I'm in!",
+        "Let's find something worth smashing!",
+    ],
+
+    "Mage": [
+        "An interesting proposition. I accept.",
+        "Your team could benefit from my knowledge.",
+        "Very well. Let's see what we can accomplish.",
+    ],
+
+    "Rogue": [
+        "Sounds like a better deal than fighting you.",
+        "I'm in. Just don't expect me to play fair.",
+        "Alright. I'll keep an eye on things.",
+    ],
+}
+
+# Special responses based on the recruited file's metadata traits.
+TRAIT_RECRUITMENT_RESPONSES = {
+    "large": [
+        "With all my data, I'll be a valuable addition.",
+        "You'll be glad to have a file like me.",
+    ],
+
+    "small": [
+        "Don't underestimate what a small file can do.",
+        "I may be small, but I can still help.",
+    ],
+
+    "hidden": [
+        "You found me. I suppose I can trust you.",
+        "I'll join, but keep my location quiet.",
+    ],
+
+    "backup": [
+        "Good thing I always keep a backup. Count me in.",
+        "I'll join. Just remember, I always have another copy.",
+    ],
+
+    "script": [
+        "Executing a new objective. I'm in.",
+        "Let's write a better outcome together.",
+    ],
+
+    "executable": [
+        "Ready to launch. Let's go.",
+        "Execution confirmed. I'll join your team.",
+    ],
+}
