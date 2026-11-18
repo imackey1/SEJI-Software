@@ -1,74 +1,65 @@
+# Desktop Warfare
 
-Readme · MD
-# Desktop Warfare: Scanner & Metadata Reader
- 
-Part of **Desktop Warfare** that uses the player's own Windows desktop as the battlefield. This module is the first stage of the pipeline: it looks at what is on the desktop and turns it into clean data the rest of the game can use.
- 
-> **Status:** early development. Windows only for now.
- 
-## What this module does
- 
-- Scans the desktop and collects the apps/files found there.
-- Extracts each app's icon (including icons stored inside `.exe` files) so it can be drawn in the game.
-- Provides a small preview window to check scanner output before it is wired into the game.
-The scanner only reads metadata (names, sizes, flags, icons). It never modifies, moves, or deletes anything.
- 
-## Requirements
- 
-| Package | Why it is needed |
-|---|---|
-| `pygame` | Opens the game window and draws images, text, and shapes. |
-| `Pillow` | Opens and resizes icon files, then hands pygame a format it understands. |
-| `icoextract` | Pulls the icon out of a Windows `.exe` so Pillow can open it like a normal image. |
- 
-Install:
- 
+The software developed by SEJI for GSU's Software Engineering class. Desktop Warfare is a roguelike that turns the files on your Windows desktop into fighters and items. A big video becomes a Barbarian, a long essay becomes a Mage, a hidden file becomes a Rogue, and they talk trash to each other while they fight.
+
+## How the pieces connect
+
 ```
-pip install pygame Pillow icoextract
+scanner  ->  classes_loot_equipment  ->  game (stats + glue)  ->  ui
+                                              |
+                                             nlg (dialogue)
 ```
- 
-Or, if the dependency list is saved as `requirements.txt`:
- 
+
+| Folder | What it does | Branch / owner |
+|---|---|---|
+| `scanner/` | Reads the desktop: names, sizes, flags, dates, icons, word counts. Never changes anything. | `metadata-reader` |
+| `classes_loot_equipment/` | Decides fighter (Barbarian / Mage / Rogue) or item (Equipment / Grenade / Heal / Junk). | `classes-loot-equipment` |
+| `nlg/` | Generates dialogue from a file's metadata and the battle situation. | `natural-language-generator` |
+| `ui/` | pygame screens: main menu, character select, battle. | `ui-ux` |
+| `game/` + `run_game.py` | Glue that connects the four modules, plus placeholder stats. | `main` |
+
+There's one record type for the whole project: `scanner.DesktopItem`. Every module reads it directly, so nobody needs to convert between file-record classes.
+
+## Setup
+
+Python 3.10 or newer.
+
 ```
 pip install -r requirements.txt
 ```
- 
-Optional: `pip install python-docx` lets the classification module count words in `.docx` files.
- 
-## Project layout
- 
-```
-scanner/
-    windows_scanner.py     # scan_apps(), icon_to_pygame_surface()
-preview.py                 # standalone window that shows what the scanner found
-requirements.txt           # dependencies
-```
- 
-This module feeds the separate `classes_loot_equipment` package (`metadata.py`, `classification.py`), which decides whether each file becomes a fighter (Barbarian, Mage, Rogue) or an item (Equipment, Grenade, Heal, Junk).
- 
-## Running the preview
- 
-From the project root:
- 
-```
-python preview.py
-```
- 
-This opens a 900x700 window showing each app found by the scanner as an icon with its name underneath (names are cut to 10 characters). The console prints how many apps were found, plus a message for any icon that failed to load. Close the window to quit.
- 
-## Public functions
- 
-### `icon_to_pygame_surface(icon_path, size)`
- 
-Loads an icon (using Pillow and, for `.exe` files, icoextract), resizes it to `size` (for example `(48, 48)`), and returns a `pygame.Surface` ready to draw. It can raise an exception if the icon cannot be read, so callers should wrap it in `try/except`, as `preview.py` does.
- 
 
-## Known limitations / TODO
- 
-- Windows only.
-- Icons that cannot be extracted are skipped, so some entries may appear without a picture.
-- Only the top level of the desktop is scanned (no recursion into folders yet).
-- Created/modified dates are not collected yet.
-## Privacy
- 
-Only metadata is read. File contents are never sent anywhere, and nothing on the user's desktop is changed.
+## Run
+
+From this folder (the project root):
+
+```
+python run_game.py                          # scans your real desktop
+python run_game.py --folder "C:\some\folder"  # scans a test folder instead
+python run_game.py --demo                   # no scan, demo characters
+```
+
+Each module can also run by itself:
+
+```
+python -m scanner.preview                 # scanner icon preview window
+python -m classes_loot_equipment.demo     # prints what every desktop file becomes
+python -m ui.main                         # UI with demo characters
+```
+
+Always run from the project root with `python -m ...`. Running a file directly from inside its folder breaks the imports.
+
+## Tests
+
+No extra install needed:
+
+```
+python -m unittest discover -v
+```
+
+## Ground rules for keeping it compatible
+
+- Classification rules live only in `classes_loot_equipment/classification.py`.
+- Every line of dialogue lives only in `nlg/dialogue_library.py`.
+- Combat numbers live only in `game/stats.py`. They're placeholders until we design balance.
+- The UI only draws the dicts it's handed (shape documented in `game/roster.py`). It never imports the scanner or the classifier.
+- Nothing ever writes to, moves, or deletes a file on the player's desktop.

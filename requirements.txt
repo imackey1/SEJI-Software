@@ -1,0 +1,13 @@
+# Install with:  pip install -r requirements.txt
+
+# pygame: opens the game window and draws images/text/shapes
+pygame>=2.1.3
+
+# Pillow: opens and resizes icon files for pygame
+Pillow>=9.1
+
+# icoextract: pulls the icon out of a Windows .exe
+icoextract
+
+# pywin32: reads where .lnk shortcuts point, so their icons can be found (Windows only)
+pywin32; sys_platform == "win32"
